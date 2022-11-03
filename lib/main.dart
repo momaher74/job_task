@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:job_task/moduels/login_moduel/login_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:job_task/component/network/remote/dio.dart';
+import 'package:job_task/moduels/gallery_moduel/gallery_screen.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'component/shared_component/bloc_observ.dart';
+
+void main()async {
+  WidgetsFlutterBinding.ensureInitialized() ;
+  DioHelper.init() ;
+  BlocOverrides.runZoned(
+        () => runApp(const MyApp()),
+    blocObserver: AppBlocObserver(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -15,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LoginScreen(),
+      home: const GalleryScreen(),
     );
   }
 }
