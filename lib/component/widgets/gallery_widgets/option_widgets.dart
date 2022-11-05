@@ -8,24 +8,26 @@ class OptionWidget extends StatelessWidget {
     required this.img,
     required this.txt,
     required this.function,
+    required this.width,
   }) : super(key: key);
   final String img;
   final String txt;
   final Function function;
+  final double width;
 
   final Color color;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
-        function() ;
+      onTap: () {
+        function();
       },
       child: Container(
-        width: 185,
+        width: width,
         height: 65,
         decoration: BoxDecoration(
-          color:color,
+          color: color,
           borderRadius: BorderRadius.circular(
             20,
           ),
@@ -33,7 +35,7 @@ class OptionWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-             Image(
+            Image(
               image: AssetImage(
                 img,
               ),

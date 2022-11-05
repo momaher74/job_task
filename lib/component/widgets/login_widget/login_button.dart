@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 
-class DefulatBotton extends StatelessWidget {
-  const DefulatBotton({
+class SubmitButton extends StatelessWidget {
+  const SubmitButton({
     Key? key,
     required this.text,
+    required this.width,
     required this.function,
   }) : super(key: key);
   final String text;
+  final double width;
   final Function function;
 
   @override
@@ -21,7 +23,7 @@ class DefulatBotton extends StatelessWidget {
           top: 30,
         ),
         height: 46,
-        width: double.infinity,
+        width: width,
         decoration: BoxDecoration(
           color: const Color(0xff7BB3FF),
           borderRadius: BorderRadius.circular(

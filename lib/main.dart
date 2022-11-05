@@ -12,7 +12,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DioHelper.init();
   await CacheHelper.init();
-  String userToken = await CacheHelper.getData(key: 'token');
+  String? userToken = await CacheHelper.getData(key: 'token');
   Bloc.observer = AppBlocObserver();
   runApp(const MyApp());
 }
@@ -30,7 +30,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
-        home:  LoginScreen(),
+        home: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            return LoginScreen();
+          },
+        ),
       ),
     );
   }

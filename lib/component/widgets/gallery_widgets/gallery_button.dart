@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:job_task/component/widgets/gallery_widgets/shared_text.dart';
 
 class GalleryButton extends StatelessWidget {
-   GalleryButton({
+  GalleryButton({
     Key? key,
     required this.txt,
     required this.width,
@@ -13,20 +13,20 @@ class GalleryButton extends StatelessWidget {
   final String txt;
   final double width;
   final Color color;
-  Function function ;
-  final IconData icon ;
+  Function function;
 
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        function() ;
+      onTap: () {
+        function();
       },
       child: Container(
         padding: const EdgeInsets.all(8),
         width: width,
-        height: 40,
+        height: 44,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
           color: Colors.white,
@@ -34,15 +34,18 @@ class GalleryButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-             Container(
+            Container(
               width: 30,
               height: 30,
-               
-               decoration: BoxDecoration(
-                 color: color, 
-                 borderRadius: BorderRadius.circular(8),
-               ),
-               child:  Icon(icon ,size: 20, color: Colors.white,),
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Icon(
+                icon,
+                size: 20,
+                color: Colors.white,
+              ),
             ),
             SharedText(
               txt: txt,

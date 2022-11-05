@@ -9,8 +9,8 @@ import 'package:job_task/moduels/gallery_moduel/cubit/gallery_cubit.dart';
 import '../../component/shared_component/constant.dart';
 import '../../component/widgets/gallery_widgets/option_widgets.dart';
 
-class GalleryScreen extends StatelessWidget {
-  const GalleryScreen({
+class TabGalleryScreen extends StatelessWidget {
+  const TabGalleryScreen({
     required this.name,
     Key? key,
   }) : super(key: key);
@@ -19,7 +19,6 @@ class GalleryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-
     return BlocProvider<GalleryCubit>(
       create: (context) => GalleryCubit()..getImages(),
       child: BlocConsumer<GalleryCubit, GalleryState>(
@@ -44,12 +43,14 @@ class GalleryScreen extends StatelessWidget {
                               ),
                             ),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 const SizedBox(
                                   height: 80,
                                 ),
-                                WelcomeText(name: name),
+                                WelcomeText(
+                                  name: name,
+                                ),
                                 const SizedBox(
                                   height: 50,
                                 ),
@@ -77,10 +78,14 @@ class GalleryScreen extends StatelessWidget {
                                 const SizedBox(
                                   height: 50,
                                 ),
-                                ImagesWidget(
-                                  count:
-                                      cubit.galleryModel!.data!.images.length,
-                                  imgs: cubit.galleryModel!.data!.images,
+                                SizedBox(
+                                  width: width * .8,
+                                  height: 400,
+                                  child: ImagesWidget(
+                                    count:
+                                        cubit.galleryModel!.data!.images.length,
+                                    images: cubit.galleryModel!.data!.images,
+                                  ),
                                 ),
                               ],
                             ),
@@ -173,16 +178,16 @@ class ImagesWidget extends StatelessWidget {
   const ImagesWidget({
     Key? key,
     required this.count,
-    required this.imgs,
+    required this.images,
   }) : super(key: key);
   final int count;
-  final List imgs;
+  final List images;
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
+      scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.all(20),
-      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: count,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -192,7 +197,7 @@ class ImagesWidget extends StatelessWidget {
         childAspectRatio: 1 / 1,
       ),
       itemBuilder: (context, index) {
-        String img = imgs[index];
+        String img = images[index];
         return GalleryItem(img: img);
       },
     );
