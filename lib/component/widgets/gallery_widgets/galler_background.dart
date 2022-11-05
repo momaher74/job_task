@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:job_task/component/shared_component/constant.dart';
 
 class GalleryBackGround extends StatelessWidget {
   GalleryBackGround({
@@ -25,7 +26,11 @@ class GalleryBackGround extends StatelessWidget {
           width: 60,
           height: 80,
           margin: const EdgeInsets.only(right: 30),
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: NetworkImage(imgUrl),
+              fit: BoxFit.cover,
+            ),
             shape: BoxShape.circle,
             color: Colors.white,
           ),

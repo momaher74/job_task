@@ -17,6 +17,9 @@ class UploadImgSuccessState extends GalleryState {}
 
 class UploadImgErrorState extends GalleryState {}
 
-class PickProdImgSuccessState extends GalleryState {}
+class PickFileSuccessState extends GalleryState {}
 
-class PickProdImgErrorState extends GalleryState {}
+class PickFileErrorState extends GalleryState {}
+
+class ConvertImgSuccessState extends GalleryState {}
+

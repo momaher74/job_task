@@ -26,7 +26,9 @@ class SharedText extends StatelessWidget {
         fontSize: txtSize,
         fontStyle: fontStyle ?? FontStyle.normal,
         fontWeight: fontWeight ?? FontWeight.normal,
+
       ),
+      maxLines: 2,
     );
   }
 }

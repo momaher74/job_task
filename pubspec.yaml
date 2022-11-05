@@ -37,7 +37,9 @@ dependencies:
   flutter_bloc: ^8.1.1
   dio: ^4.0.6
   image_picker: ^0.8.6
-  file_picker: ^4.6.1
+  blurrycontainer: ^1.0.2
+  flutter_cube: ^0.1.1
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:

@@ -1,11 +1,13 @@
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:job_task/component/network/remote/dio.dart';
 import 'package:job_task/component/shared_component/constant.dart';
-import 'package:job_task/models/gallery.dart';
+import 'package:job_task/models/gallery_model.dart';
+import 'package:job_task/models/upload_model.dart';
 import 'package:meta/meta.dart';
 
 part 'gallery_state.dart';
@@ -36,31 +38,43 @@ class GalleryCubit extends Cubit<GalleryState> {
     );
     if (pickedFile != null) {
       img = File(pickedFile.path);
-      print(img);
-      emit(PickProdImgSuccessState());
+
+      emit(PickFileSuccessState());
     } else {
       print('No  Profile image selected.');
-      emit(PickProdImgErrorState());
+      emit(PickFileErrorState());
     }
   }
 
-  void uploadImg() {
-    emit(UploadImgLoadingState());
-    DioHelper.postData(url: 'upload', data: {
-      'img': img,
-    }).then((value) {
-      emit(UploadImgSuccessState());
-    }).catchError((error) {
-      emit(UploadImgErrorState());
-    });
+  Future<void> pickCameraImage() async {
+    final pickedFile = await picker.pickImage(
+      source: ImageSource.camera,
+    );
+    if (pickedFile != null) {
+      img = File(pickedFile.path);
+
+      emit(PickFileSuccessState());
+    } else {
+      print('No  Profile image selected.');
+      emit(PickFileErrorState());
+    }
   }
 
-  pickFile() {
-    FilePicker.platform.pickFiles().then((value) {
-      img = File(value!.files.single.path!);
-      emit(PickProdImgSuccessState());
+  UploadModel? uploadModel;
+
+  void uploadImg() async {
+    emit(UploadImgLoadingState());
+    String fileName = img!.path.split('/').last;
+    FormData formData = FormData.fromMap({
+      "img": await MultipartFile.fromFile(img!.path, filename: fileName),
+    });
+    DioHelper.postData(url: 'upload', data: formData, token: token)
+        .then((value) {
+      uploadModel = UploadModel.fromJson(value.data);
+      getImages();
+      img = null;
     }).catchError((error) {
-      emit(PickProdImgErrorState());
+      emit(UploadImgErrorState());
     });
   }
 }
