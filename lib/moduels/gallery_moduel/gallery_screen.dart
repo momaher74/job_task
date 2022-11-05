@@ -1,13 +1,12 @@
 import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:job_task/component/widgets/gallery_widgets/galler_background.dart';
 import 'package:job_task/component/widgets/gallery_widgets/gallery_button.dart';
 import 'package:job_task/component/widgets/gallery_widgets/gallery_item.dart';
 import 'package:job_task/component/widgets/gallery_widgets/shared_text.dart';
 import 'package:job_task/moduels/gallery_moduel/cubit/gallery_cubit.dart';
-import 'package:job_task/moduels/login_moduel/cubit/login_cubit.dart';
 
+import '../../component/shared_component/constant.dart';
 import '../../component/widgets/gallery_widgets/option_widgets.dart';
 
 class GalleryScreen extends StatelessWidget {
@@ -20,7 +19,7 @@ class GalleryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    // double height = MediaQuery.of(context).size.height;
     return BlocProvider<GalleryCubit>(
       create: (context) => GalleryCubit()..getImages(),
       child: BlocConsumer<GalleryCubit, GalleryState>(
@@ -31,53 +30,76 @@ class GalleryScreen extends StatelessWidget {
           return Scaffold(
             body: cubit.galleryModel != null
                 ? SafeArea(
-                    child: Stack(
-                      children: [
-                        GalleryBackGround(
-                          height: height,
-                          width: width,
-                        ),
-                        SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(
-                                height: 60,
-                              ),
-                              WelcomeText(name: name),
-                              const SizedBox(
-                                height: 50,
-                              ),
-                              ButtonsWidget(
-                                function: () {
-                                  if (cubit.img != null) {
-                                    cubit.uploadImg();
-                                  } else {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => DialogWidget(
-                                        cameraFunction: () {
-                                          cubit.pickCameraImage();
-                                        },
-                                        galleryFunction: () {
-                                          cubit.pickGalleryImage();
-                                        },
-                                      ),
-                                    );
-                                  }
-                                },
-                              ),
-                              const SizedBox(
-                                height: 50,
-                              ),
-                              ImagesWidget(
-                                count: cubit.galleryModel!.data!.images.length,
-                                imgs: cubit.galleryModel!.data!.images,
-                              ),
-                            ],
+                    child: SingleChildScrollView(
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: width,
+                            decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage(
+                                      'assets/images/gallerybg.png',
+                                    ))),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  height: 80,
+                                ),
+                                WelcomeText(name: name),
+                                const SizedBox(
+                                  height: 50,
+                                ),
+                                ButtonsWidget(
+                                  function: () {
+                                    if (cubit.img != null) {
+                                      cubit.uploadImg();
+                                    } else {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => DialogWidget(
+                                          cameraFunction: () {
+                                            cubit.pickCameraImage();
+                                          },
+                                          galleryFunction: () {
+                                            cubit.pickGalleryImage();
+                                          },
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: 50,
+                                ),
+                                ImagesWidget(
+                                  count:
+                                      cubit.galleryModel!.data!.images.length,
+                                  imgs: cubit.galleryModel!.data!.images,
+                                ),
+                              ],
+                            ),
                           ),
-                        )
-                      ],
+                          Positioned(
+                            right: 2,
+                            top: 20,
+                            child: Container(
+                              width: 60,
+                              height: 80,
+                              margin: const EdgeInsets.only(right: 30),
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: NetworkImage(imgUrl),
+                                  fit: BoxFit.cover,
+                                ),
+                                shape: BoxShape.circle,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 : const Center(
@@ -91,7 +113,10 @@ class GalleryScreen extends StatelessWidget {
 }
 
 class WelcomeText extends StatelessWidget {
-  const WelcomeText({Key? key, required this.name}) : super(key: key);
+  const WelcomeText({
+    Key? key,
+    required this.name,
+  }) : super(key: key);
   final String name;
 
   @override
@@ -150,7 +175,7 @@ class ImagesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(20),
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: count,

@@ -14,8 +14,14 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery
+        .of(context)
+        .size
+        .width;
+    double height = MediaQuery
+        .of(context)
+        .size
+        .height;
 
     return BlocProvider<LoginCubit>(
       create: (context) => LoginCubit(),
@@ -23,56 +29,58 @@ class LoginScreen extends StatelessWidget {
         builder: (context, state) {
           var cubit = LoginCubit.get(context);
           return Scaffold(
-            body: SafeArea(
-              child: SingleChildScrollView(
-                child: Stack(
-                  children: [
-                    Container(
-                      width: width,
-                      height: height,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage('assets/images/loginbg.png'),
+              body: SafeArea(
+                child: SingleChildScrollView(
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: width,
+                        height: height,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/images/loginbg.png'),
+                          ),
                         ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Form(
-                          key: formKey,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const SizedBox(
-                                height: 100,
-                              ),
-                              const GalleryText(),
-                              const SizedBox(
-                                height: 30,
-                              ),
-                              LoginWidget(
-                                emailController: emailController,
-                                passwordController: passwordController,
-                                function: () {
-                                  cubit.logIn(
-                                    email: emailController.text,
-                                    password: passwordController.text,
-                                    context: context,
-                                  );
-                                },
-                                formKey: formKey,
-                              ),
-                            ],
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Form(
+                            key: formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const SizedBox(
+                                  height: 100,
+                                ),
+                                const GalleryText(),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                LoginWidget(
+                                  emailController: emailController,
+                                  passwordController: passwordController,
+                                  function: () {
+                                    cubit.logIn(
+                                      email: emailController.text,
+                                      password: passwordController.text,
+                                      context: context,
+                                    );
+                                  },
+                                  formKey: formKey,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const CameraImg(),
-                  ],
+                      const CameraImg(),
+
+
+                    ],
+                  ),
                 ),
               ),
-            ),
           );
         },
         listener: (context, state) {},
@@ -124,12 +132,11 @@ class GalleryText extends StatelessWidget {
 }
 
 class LoginWidget extends StatelessWidget {
-  const LoginWidget(
-      {Key? key,
-      required this.emailController,
-      required this.passwordController,
-      required this.function,
-      required this.formKey})
+  const LoginWidget({Key? key,
+    required this.emailController,
+    required this.passwordController,
+    required this.function,
+    required this.formKey})
       : super(key: key);
   final TextEditingController emailController;
 
